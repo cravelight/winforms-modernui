@@ -94,6 +94,9 @@ namespace MetroFramework.Controls
             }
         }
 
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
+        public event EventHandler<TabPageClosedEventArgs> TabPageClosed;
+
         private MetroColorStyle metroStyle = MetroColorStyle.Default;
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroColorStyle.Default)]
@@ -676,6 +679,14 @@ namespace MetroFramework.Controls
         private void CloseTabPage(MetroTabPage page)
         {
             TabPages.Remove(page);
+            OnTabPageClosed(page);
+        }
+
+        protected virtual void OnTabPageClosed(MetroTabPage page)
+        {
+            var pageClosed = TabPageClosed;
+            if (pageClosed != null)
+                pageClosed(this, new TabPageClosedEventArgs(page));
         }
 
         private bool CanCloseTab(MetroTabPage tabPage)

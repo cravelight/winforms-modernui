@@ -144,6 +144,7 @@
     <Compile Include="Controls\MetroUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\TabPageClosedEventArgs.cs" />
     <Compile Include="Drawing\Html\CssAnonymousBlockBox.cs" />
     <Compile Include="Drawing\Html\CssAnonymousBox.cs" />
     <Compile Include="Drawing\Html\CssBlock.cs" />
