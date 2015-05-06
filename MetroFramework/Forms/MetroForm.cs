@@ -143,6 +143,14 @@ namespace MetroFramework.Forms
             set { formBorderStyle = value; }
         }
 
+        private bool isAeroWindowSnapActive = true;
+        [Category(MetroDefaults.PropertyCategory.Appearance)]
+        public bool AeroWindowSnapActive
+        {
+            get { return isAeroWindowSnapActive; }
+            set { isAeroWindowSnapActive = value; }
+        }
+
         private bool isMovable = true;
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         public bool Movable
@@ -172,7 +180,7 @@ namespace MetroFramework.Forms
         public bool DisplayHeader
         {
             get { return displayHeader; }
-            set 
+            set
             {
                 if (value != displayHeader)
                 {
@@ -235,7 +243,7 @@ namespace MetroFramework.Forms
             set
             {
                 backImage = value;
-                if(value != null) _image = ApplyInvert(new Bitmap(value));
+                if (value != null) _image = ApplyInvert(new Bitmap(value));
                 Refresh();
             }
         }
@@ -335,9 +343,9 @@ namespace MetroFramework.Forms
                     G = (byte)(255 - pixelColor.G);
                     B = (byte)(255 - pixelColor.B);
 
-                    if (R <= 0) R= 17;
-                    if (G <= 0) G= 17;
-                    if (B <= 0) B= 17;
+                    if (R <= 0) R = 17;
+                    if (G <= 0) G = 17;
+                    if (B <= 0) B = 17;
                     //bitmapImage.SetPixel(x, y, Color.FromArgb((int)A, (int)R, (int)G, (int)B));
                     bitmapImage.SetPixel(x, y, Color.FromArgb((int)R, (int)G, (int)B));
                 }
@@ -476,9 +484,9 @@ namespace MetroFramework.Forms
                 case FormStartPosition.CenterScreen:
                     if (IsMdiChild)
                     {
-                        CenterToParent(); 
+                        CenterToParent();
                     }
-                    else 
+                    else
                     {
                         CenterToScreen();
                     }
@@ -486,7 +494,7 @@ namespace MetroFramework.Forms
             }
 
             RemoveCloseButton();
-        
+
             if (ControlBox)
             {
                 AddWindowButton(WindowButtons.Close);
@@ -521,6 +529,13 @@ namespace MetroFramework.Forms
 
                 DwmApi.DwmExtendFrameIntoClientArea(Handle, ref m);
             }
+            UpdateWindowButtonPosition();
+        }
+
+        protected override void OnDeactivate(EventArgs e)
+        {
+            base.OnDeactivate(e);
+            UpdateWindowButtonPosition();
         }
 
         protected override void OnEnabledChanged(EventArgs e)
@@ -550,10 +565,10 @@ namespace MetroFramework.Forms
                     int sc = m.WParam.ToInt32() & 0xFFF0;
                     switch (sc)
                     {
-                        case (int)WinApi.Messages.SC_MOVE: 
-                            if (!Movable) return; 
+                        case (int)WinApi.Messages.SC_MOVE:
+                            if (!Movable) return;
                             break;
-                        case (int)WinApi.Messages.SC_MAXIMIZE: 
+                        case (int)WinApi.Messages.SC_MAXIMIZE:
                             break;
                         case (int)WinApi.Messages.SC_RESTORE:
                             break;
@@ -576,6 +591,29 @@ namespace MetroFramework.Forms
 
                 case (int)WinApi.Messages.WM_DWMCOMPOSITIONCHANGED:
                     break;
+
+                case (int)WinApi.Messages.WM_NCCALCSIZE:
+                    if (isAeroWindowSnapActive)
+                    {
+                        if (m.WParam.Equals(IntPtr.Zero))
+                        {
+
+                            WinApi.RECT rc = (WinApi.RECT)m.GetLParam(typeof(WinApi.RECT));
+                            Rectangle r = rc.ToRectangle();
+                            r.Inflate(7, 7);
+                            System.Runtime.InteropServices.Marshal.StructureToPtr(new WinApi.RECT(r), m.LParam, true);
+                        }
+                        else
+                        {
+                            WinApi.NCCALCSIZE_PARAMS csp = (WinApi.NCCALCSIZE_PARAMS)m.GetLParam(typeof(WinApi.NCCALCSIZE_PARAMS));
+                            Rectangle r = csp.rect0.ToRectangle();
+                            r.Inflate(7, 7);
+                            csp.rect0 = new WinApi.RECT(r);
+                            System.Runtime.InteropServices.Marshal.StructureToPtr(csp, m.LParam, true);
+                        }
+                    }
+                    m.Result = IntPtr.Zero;
+                    break;
             }
 
             base.WndProc(ref m);
@@ -585,11 +623,21 @@ namespace MetroFramework.Forms
                 case (int)WinApi.Messages.WM_GETMINMAXINFO:
                     OnGetMinMaxInfo(m.HWnd, m.LParam);
                     break;
-                 case (int)WinApi.Messages.WM_SIZE:
+                case (int)WinApi.Messages.WM_SIZE:
                     MetroFormButton btn;
                     windowButtonList.TryGetValue(WindowButtons.Maximize, out btn);
-                    if (WindowState == FormWindowState.Normal) shadowForm.Visible = true;btn.Text = "1";
-                    if(WindowState== FormWindowState.Maximized) btn.Text = "2";
+                    if (WindowState == FormWindowState.Normal)
+                    {
+                        if (shadowForm != null)
+                            shadowForm.Visible = true;
+                        if (btn != null)
+                            btn.Text = "1";
+                    }
+                    if (WindowState == FormWindowState.Maximized)
+                    {
+                        if (btn != null)
+                            btn.Text = "2";
+                    }
                     break;
             }
         }
@@ -624,7 +672,7 @@ namespace MetroFramework.Forms
                     return WinApi.HitTest.HTBOTTOMRIGHT;
             }
 
-          if (RectangleToScreen(new Rectangle(borderWidth, borderWidth, ClientRectangle.Width - 2 * borderWidth, 50)).Contains(vPoint))
+            if (RectangleToScreen(new Rectangle(borderWidth, borderWidth, ClientRectangle.Width - 2 * borderWidth, 50)).Contains(vPoint))
                 return WinApi.HitTest.HTCAPTION;
 
             return WinApi.HitTest.HTCLIENT;
@@ -639,10 +687,10 @@ namespace MetroFramework.Forms
                 if (WindowState == FormWindowState.Maximized) return;
                 if (Width - borderWidth > e.Location.X && e.Location.X > borderWidth && e.Location.Y > borderWidth)
                 {
-                    MoveControl();                    
+                    MoveControl();
                 }
             }
-            
+
         }
 
         [SecuritySafeCritical]
@@ -678,13 +726,10 @@ namespace MetroFramework.Forms
             Close
         }
 
-        private Dictionary<WindowButtons, MetroFormButton> windowButtonList;
+        private Dictionary<WindowButtons, MetroFormButton> windowButtonList = new Dictionary<WindowButtons, MetroFormButton>();
 
         private void AddWindowButton(WindowButtons button)
         {
-            if (windowButtonList == null)
-                windowButtonList = new Dictionary<WindowButtons, MetroFormButton>();
-
             if (windowButtonList.ContainsKey(button))
                 return;
 
@@ -752,7 +797,7 @@ namespace MetroFramework.Forms
         {
             if (!ControlBox) return;
 
-            Dictionary<int, WindowButtons> priorityOrder = new Dictionary<int, WindowButtons>(3) { {0, WindowButtons.Close}, {1, WindowButtons.Maximize}, {2, WindowButtons.Minimize} };
+            Dictionary<int, WindowButtons> priorityOrder = new Dictionary<int, WindowButtons>(3) { { 0, WindowButtons.Close }, { 1, WindowButtons.Maximize }, { 2, WindowButtons.Minimize } };
 
             Point firstButtonLocation = new Point(ClientRectangle.Width - borderWidth - 25, borderWidth);
             int lastDrawedButtonPosition = firstButtonLocation.X - 25;
@@ -1042,12 +1087,13 @@ namespace MetroFramework.Forms
 
         private const int CS_DROPSHADOW = 0x20000;
         const int WS_MINIMIZEBOX = 0x20000;
+        const int WS_SIZEBOX = 0x40000;
         protected override CreateParams CreateParams
         {
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.Style |= WS_MINIMIZEBOX;
+                cp.Style |= WS_MINIMIZEBOX | (isAeroWindowSnapActive ? WS_SIZEBOX : 0);
                 if (ShadowType == MetroFormShadowType.SystemShadow)
                     cp.ClassStyle |= CS_DROPSHADOW;
                 return cp;
@@ -1227,7 +1273,7 @@ namespace MetroFramework.Forms
             protected const int WS_EX_NOACTIVATE = 0x8000000;
 
             private const int TICKS_PER_MS = 10000;
-            private const long RESIZE_REDRAW_INTERVAL = 1000 * TICKS_PER_MS; 
+            private const long RESIZE_REDRAW_INTERVAL = 1000 * TICKS_PER_MS;
 
             #endregion
         }
@@ -1239,7 +1285,7 @@ namespace MetroFramework.Forms
         protected class MetroAeroDropShadow : MetroShadowBase
         {
             public MetroAeroDropShadow(Form targetForm)
-                : base(targetForm, 0, WS_EX_TRANSPARENT | WS_EX_NOACTIVATE )
+                : base(targetForm, 0, WS_EX_TRANSPARENT | WS_EX_NOACTIVATE)
             {
                 FormBorderStyle = FormBorderStyle.SizableToolWindow;
             }
@@ -1264,7 +1310,7 @@ namespace MetroFramework.Forms
         {
             private Point Offset = new Point(-6, -6);
 
-            public MetroFlatDropShadow(Form targetForm) 
+            public MetroFlatDropShadow(Form targetForm)
                 : base(targetForm, 6, WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE)
             {
             }
@@ -1283,7 +1329,7 @@ namespace MetroFramework.Forms
 
             protected override void PaintShadow()
             {
-                using( Bitmap getShadow = DrawBlurBorder() )
+                using (Bitmap getShadow = DrawBlurBorder())
                     SetBitmap(getShadow, 255);
             }
 
@@ -1378,7 +1424,7 @@ namespace MetroFramework.Forms
 
         protected class MetroRealisticDropShadow : MetroShadowBase
         {
-            public MetroRealisticDropShadow(Form targetForm) 
+            public MetroRealisticDropShadow(Form targetForm)
                 : base(targetForm, 15, WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE)
             {
             }
@@ -1397,7 +1443,7 @@ namespace MetroFramework.Forms
 
             protected override void PaintShadow()
             {
-                using( Bitmap getShadow = DrawBlurBorder() )
+                using (Bitmap getShadow = DrawBlurBorder())
                     SetBitmap(getShadow, 255);
             }
 
