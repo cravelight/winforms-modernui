@@ -92,6 +92,8 @@
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel21 = new MetroFramework.Controls.MetroLabel();
+            this.metroButton4 = new MetroFramework.Controls.MetroButton();
             this.metroButton12 = new MetroFramework.Controls.MetroButton();
             this.metroButton11 = new MetroFramework.Controls.MetroButton();
             this.metroButton10 = new MetroFramework.Controls.MetroButton();
@@ -349,7 +351,7 @@
             // 
             this.metroDateTime2.Enabled = false;
             this.metroDateTime2.Location = new System.Drawing.Point(201, 87);
-            this.metroDateTime2.MinimumSize = new System.Drawing.Size(4, 29);
+            this.metroDateTime2.MinimumSize = new System.Drawing.Size(0, 29);
             this.metroDateTime2.Name = "metroDateTime2";
             this.metroDateTime2.Size = new System.Drawing.Size(213, 29);
             this.metroDateTime2.TabIndex = 20;
@@ -366,7 +368,7 @@
             // metroDateTime1
             // 
             this.metroDateTime1.Location = new System.Drawing.Point(201, 51);
-            this.metroDateTime1.MinimumSize = new System.Drawing.Size(4, 29);
+            this.metroDateTime1.MinimumSize = new System.Drawing.Size(0, 29);
             this.metroDateTime1.Name = "metroDateTime1";
             this.metroDateTime1.Size = new System.Drawing.Size(213, 29);
             this.metroDateTime1.TabIndex = 18;
@@ -403,7 +405,7 @@
             this.metroToggle3.Name = "metroToggle3";
             this.metroToggle3.Size = new System.Drawing.Size(50, 17);
             this.metroToggle3.TabIndex = 15;
-            this.metroToggle3.Text = "Off";
+            this.metroToggle3.Text = "Aus";
             this.metroToggle3.UseSelectable = true;
             // 
             // metroToggle2
@@ -414,7 +416,7 @@
             this.metroToggle2.Name = "metroToggle2";
             this.metroToggle2.Size = new System.Drawing.Size(50, 17);
             this.metroToggle2.TabIndex = 14;
-            this.metroToggle2.Text = "Off";
+            this.metroToggle2.Text = "Aus";
             this.metroToggle2.UseSelectable = true;
             this.metroToggle2.UseStyleColors = true;
             // 
@@ -536,7 +538,7 @@
             this.metroToggle1.Name = "metroToggle1";
             this.metroToggle1.Size = new System.Drawing.Size(80, 17);
             this.metroToggle1.TabIndex = 3;
-            this.metroToggle1.Text = "Off";
+            this.metroToggle1.Text = "Aus";
             this.metroToolTip.SetToolTip(this.metroToggle1, "Toggle Tooltip");
             this.metroToggle1.UseSelectable = true;
             // 
@@ -886,6 +888,8 @@
             // 
             // metroTabPage6
             // 
+            this.metroTabPage6.Controls.Add(this.metroLabel21);
+            this.metroTabPage6.Controls.Add(this.metroButton4);
             this.metroTabPage6.Controls.Add(this.metroButton12);
             this.metroTabPage6.Controls.Add(this.metroButton11);
             this.metroTabPage6.Controls.Add(this.metroButton10);
@@ -904,6 +908,25 @@
             this.metroTabPage6.VerticalScrollbarBarColor = true;
             this.metroTabPage6.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage6.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel21
+            // 
+            this.metroLabel21.AutoSize = true;
+            this.metroLabel21.Location = new System.Drawing.Point(165, 226);
+            this.metroLabel21.Name = "metroLabel21";
+            this.metroLabel21.Size = new System.Drawing.Size(87, 19);
+            this.metroLabel21.TabIndex = 10;
+            this.metroLabel21.Text = "You entered: ";
+            // 
+            // metroButton4
+            // 
+            this.metroButton4.Location = new System.Drawing.Point(5, 215);
+            this.metroButton4.Name = "metroButton4";
+            this.metroButton4.Size = new System.Drawing.Size(154, 42);
+            this.metroButton4.TabIndex = 9;
+            this.metroButton4.Text = "IputBox";
+            this.metroButton4.UseSelectable = true;
+            this.metroButton4.Click += new System.EventHandler(this.metroButton4_Click_1);
             // 
             // metroButton12
             // 
@@ -1230,6 +1253,7 @@
             this.metroTabPage4.ResumeLayout(false);
             this.metroTabPage4.PerformLayout();
             this.metroTabPage6.ResumeLayout(false);
+            this.metroTabPage6.PerformLayout();
             this.metroTabPage7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.metroGrid1)).EndInit();
             this.metroTabPage5.ResumeLayout(false);
@@ -1331,6 +1355,7 @@
         private Controls.MetroGrid metroGrid1;
         private Controls.MetroButton metroButton4;
         private Controls.MetroTabPage metroTabPage8;
+        private Controls.MetroLabel metroLabel21;
 
     }
 }

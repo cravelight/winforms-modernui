@@ -170,14 +170,16 @@ namespace MetroFramework.Controls
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-
-            if (e.Delta > 0 && this.FirstDisplayedScrollingRowIndex > 0)
+            if (this.RowCount > 1)
             {
-                this.FirstDisplayedScrollingRowIndex--;
-            }
-            else if (e.Delta < 0)
-            {
-                this.FirstDisplayedScrollingRowIndex++;
+                if (e.Delta > 0 && this.FirstDisplayedScrollingRowIndex > 0)
+                {
+                    this.FirstDisplayedScrollingRowIndex--;
+                }
+                else if (e.Delta < 0)
+                {
+                    this.FirstDisplayedScrollingRowIndex++;
+                }
             }
         }
 
