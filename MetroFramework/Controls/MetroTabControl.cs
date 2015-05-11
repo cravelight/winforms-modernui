@@ -94,6 +94,9 @@ namespace MetroFramework.Controls
             }
         }
 
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
+        public event EventHandler<TabPageClosedEventArgs> TabPageClosed;
+
         private MetroColorStyle metroStyle = MetroColorStyle.Default;
         [Category(MetroDefaults.PropertyCategory.Appearance)]
         [DefaultValue(MetroColorStyle.Default)]
@@ -199,6 +202,7 @@ namespace MetroFramework.Controls
         private bool bUpDown = false;
 
         private const int TabBottomBorderHeight = 3;
+        private const int CloseButtonOffset = 8;
 
         private MetroTabControlSize metroLabelSize = MetroTabControlSize.Medium;
         [DefaultValue(MetroTabControlSize.Medium)]
@@ -275,7 +279,7 @@ namespace MetroFramework.Controls
                      ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.SupportsTransparentBackColor, true);
 
-            Padding = new Point(6, 8);
+            Padding = new Point(10, 8);
         }
 
         #endregion
@@ -426,6 +430,27 @@ namespace MetroFramework.Controls
 
             TextRenderer.DrawText(graphics, tabPage.Text, MetroFonts.TabControl(metroLabelSize, metroLabelWeight),
                                   tabRect, foreColor, backColor, MetroPaint.GetTextFormatFlags(TextAlign));
+
+            if (CanCloseTab((MetroTabPage)tabPage))
+                DrawCloseButton(graphics, bgRect);
+        }
+
+        private void DrawCloseButton(Graphics graphics, Rectangle tabRectangle)
+        {
+            var rectangle = GetCloseButtonRectangle(tabRectangle);
+            using (var pen = GetCloseButtonPen(rectangle))
+            {
+                graphics.DrawLine(pen, rectangle.X, rectangle.Y, rectangle.X + CloseButtonOffset, rectangle.Y + CloseButtonOffset);
+                graphics.DrawLine(pen, rectangle.X + CloseButtonOffset, rectangle.Y, rectangle.X, rectangle.Y + CloseButtonOffset);
+            }
+        }
+
+        private Pen GetCloseButtonPen(Rectangle closeRectangle)
+        {
+            Color foreColor = IsInCloseButtonArea(closeRectangle, PointToClient(MousePosition))
+                                  ? MetroPaint.GetStyleColor(Style)
+                                  : MetroPaint.ForeColor.TabControl.Disabled(Theme);
+            return new Pen(foreColor, 2.8F);
         }
 
         [SecuritySafeCritical]
@@ -590,6 +615,99 @@ namespace MetroFramework.Controls
             SendMessage(this.Handle, WM_FONTCHANGE, IntPtr.Zero, IntPtr.Zero);
             this.UpdateStyles();
         }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            MetroTabPage page = GetTabPageAtPoint(e.Location);
+            if (CanCloseTab(page) && IsCloseButtonClick(page, e.Location))
+                CloseTabPage(page);
+
+            base.OnMouseDown(e);
+        }
+
+        private MetroTabPage _hoverTab;
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            SetHoverTab(GetTabPageAtPoint(e.Location));
+            base.OnMouseMove(e);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            SetHoverTab(null);
+            base.OnMouseLeave(e);
+        }
+
+        private void SetHoverTab(MetroTabPage page)
+        {
+            _hoverTab = page;
+            if (DesignMode)
+                return;
+
+            Invalidate();
+        }
+
+        private bool IsCloseButtonClick(MetroTabPage page, Point location)
+        {
+            var index = TabPages.IndexOf(page);
+            var rectangle = GetTabRect(index);
+            var closeRectagle = GetCloseButtonRectangle(rectangle);
+            return IsInCloseButtonArea(closeRectagle, location);
+        }
+
+        private static Rectangle GetCloseButtonRectangle(Rectangle tabRectangle)
+        {
+            var closeRectangle = tabRectangle;
+            closeRectangle.Offset(closeRectangle.Width - 2 * CloseButtonOffset + CloseButtonOffset / 2, CloseButtonOffset);
+            closeRectangle.Size = new Size(CloseButtonOffset, CloseButtonOffset);
+            return closeRectangle;
+        }
+
+        private static bool IsInCloseButtonArea(Rectangle rectangle, Point location)
+        {
+            var center = new Point(
+                (rectangle.Left + rectangle.Right) / 2,
+                (rectangle.Top + rectangle.Bottom) / 2);
+
+            double distance = Math.Sqrt(
+                Math.Pow(center.X - location.X, 2) +
+                Math.Pow(center.Y - location.Y, 2));
+
+            return distance <= 1.2 * CloseButtonOffset;
+        }
+
+        private void CloseTabPage(MetroTabPage page)
+        {
+            TabPages.Remove(page);
+            OnTabPageClosed(page);
+        }
+
+        protected virtual void OnTabPageClosed(MetroTabPage page)
+        {
+            var pageClosed = TabPageClosed;
+            if (pageClosed != null)
+                pageClosed(this, new TabPageClosedEventArgs(page));
+        }
+
+        private bool CanCloseTab(MetroTabPage tabPage)
+        {
+            if (tabPage == null)
+                return false;
+
+            if (!tabPage.AllowClose)
+                return false;
+
+            return tabPage == _hoverTab || tabPage == SelectedTab;
+        }
+
+        private MetroTabPage GetTabPageAtPoint(Point location)
+        {
+            for (int i = 0; i < TabPages.Count; i++)
+                if (GetTabRect(i).Contains(location))
+                    return (MetroTabPage)TabPages[i];
+
+            return null;
+        }
         #endregion
 
         #region Helper Methods
@@ -678,6 +796,5 @@ namespace MetroFramework.Controls
         }
 
         #endregion
-
     }
 }
