@@ -922,6 +922,7 @@
             // metroLabel21
             // 
             this.metroLabel21.AutoSize = true;
+            this.metroLabel21.LabelMode = MetroFramework.Controls.MetroLabelMode.Selectable;
             this.metroLabel21.Location = new System.Drawing.Point(165, 226);
             this.metroLabel21.Name = "metroLabel21";
             this.metroLabel21.Size = new System.Drawing.Size(88, 19);
@@ -1181,7 +1182,6 @@
             // metroStyleManager
             // 
             this.metroStyleManager.Owner = this;
-            this.metroStyleManager.Theme = MetroFramework.MetroThemeStyle.Dark;
             // 
             // metroToolTip
             // 
@@ -1247,9 +1247,9 @@
             this.ClientSize = new System.Drawing.Size(860, 468);
             this.Controls.Add(this.metroTabControl1);
             this.Name = "MainForm";
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.AeroShadow;
             this.StyleManager = this.metroStyleManager;
             this.Text = "metro framework";
-            this.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.metroTabControl1.ResumeLayout(false);
             this.metroTabPage1.ResumeLayout(false);
             this.metroTabPage1.PerformLayout();
