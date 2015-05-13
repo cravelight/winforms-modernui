@@ -54,12 +54,12 @@ namespace MetroFramework.Demo
 
         private void metroButton10_Click(object sender, EventArgs e)
         {
-            MetroMessageBox.Show(this, "This is a sample MetroMessagebox `OK` and `Cancel` button", "MetroMessagebox", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            MetroMessageBox.Show(this, MetroMessageBox.Show(this, "This is a sample MetroMessagebox `OK` and `Cancel` button", "MetroMessagebox", MessageBoxButtons.OKCancel, MessageBoxIcon.Information).ToString() );
         }
 
         private void metroButton7_Click(object sender, EventArgs e)
         {
-            MetroMessageBox.Show(this, "This is a sample MetroMessagebox `Yes` and `No` button", "MetroMessagebox", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            MetroMessageBox.Show(this, MetroMessageBox.Show(this, "This is a sample MetroMessagebox `Yes` and `No` button", "MetroMessagebox", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2).ToString() );
         }
 
         private void metroButton8_Click(object sender, EventArgs e)
@@ -90,8 +90,10 @@ namespace MetroFramework.Demo
         private void metroButton4_Click_1(object sender, EventArgs e)
         {
             string returnValue = "";
-            MetroMessageBox.Show(this, "This is a sample Input Box with `OK` and `Cancel` button", "MetroMessagebox", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, ref returnValue, true);
-            metroLabel21.Text = "You entered: " + returnValue;
+            if (MetroMessageBox.Show(this, "This is a sample Input Box with `OK` and `Cancel` button", "MetroMessagebox", MessageBoxButtons.OKCancel, MessageBoxIcon.Information,  MessageBoxDefaultButton.Button1, ref returnValue) == System.Windows.Forms.DialogResult.OK)
+            {
+                metroLabel21.Text = "You entered: " + returnValue;
+            }
         }
     }
 

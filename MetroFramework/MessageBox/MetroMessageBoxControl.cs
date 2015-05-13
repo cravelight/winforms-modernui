@@ -97,6 +97,8 @@ namespace MetroFramework
                     metroButton1.Text = "&OK";
                     metroButton1.Location = metroButton3.Location;
                     metroButton1.Tag = DialogResult.OK;
+                    this.AcceptButton = metroButton1;
+                    this.CancelButton = metroButton1;
 
                     EnableButton(metroButton2, false);
                     EnableButton(metroButton3, false);
@@ -107,12 +109,14 @@ namespace MetroFramework
                     metroButton1.Text = "&OK";
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.OK;
+                    this.AcceptButton = metroButton1;
 
                     EnableButton(metroButton2);
 
                     metroButton2.Text = "&Cancel";
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.Cancel;
+                    this.CancelButton = metroButton2;
 
                     EnableButton(metroButton3, false);
                     break;
@@ -122,12 +126,14 @@ namespace MetroFramework
                     metroButton1.Text = "&Retry";
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.Retry;
+                    this.AcceptButton = metroButton1;
 
                     EnableButton(metroButton2);
 
                     metroButton2.Text = "&Cancel";
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.Cancel;
+                    this.CancelButton = metroButton2;
 
                     EnableButton(metroButton3, false);
                     break;
@@ -137,12 +143,14 @@ namespace MetroFramework
                     metroButton1.Text = "&Yes";
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.Yes;
+                    this.AcceptButton = metroButton1;
 
                     EnableButton(metroButton2);
 
                     metroButton2.Text = "&No";
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.No;
+                    this.CancelButton = metroButton2;
 
                     EnableButton(metroButton3, false);
                     break;
@@ -161,6 +169,7 @@ namespace MetroFramework
 
                     metroButton3.Text = "&Cancel";
                     metroButton3.Tag = DialogResult.Cancel;
+                    this.CancelButton = metroButton2;
 
                     break;
                 case MessageBoxButtons.AbortRetryIgnore:
@@ -182,6 +191,8 @@ namespace MetroFramework
                     break;
                 default : break;
             }
+
+
 
             switch (_properties.Icon)
             {

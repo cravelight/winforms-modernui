@@ -62,7 +62,7 @@ namespace MetroFramework
         /// <returns></returns>
         public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, int height = defaultHeight)
         {
-            string refstring= "";
+            string refstring= null;
             return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, ref refstring, height); 
         }
 
@@ -76,8 +76,11 @@ namespace MetroFramework
         /// <param name="icon"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, ref string inputValue, bool ShowInputBox, int height = defaultHeight)
-        { return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, ref inputValue, height, ShowInputBox); }
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, int height = defaultHeight)
+        {
+            string refstring = null;
+            return Show(owner, message, title, buttons, icon, defaultbutton, ref refstring, height);
+        }
 
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
@@ -90,7 +93,7 @@ namespace MetroFramework
         /// <param name="defaultbutton"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, ref string inputValue, int height = defaultHeight, bool ShowInputBox = false)
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, ref string inputValue, int height = defaultHeight)
         {
             DialogResult _result = DialogResult.None;
 
@@ -151,8 +154,7 @@ namespace MetroFramework
                 //    _control.Style = ((MetroForm)_owner).Style;
                 //}
 
-                _control.Properties.InputBox = ShowInputBox;
-
+                _control.Properties.InputBox = (inputValue != null);
 
                 _control.Size = new Size(_owner.Size.Width, height);
                 _control.Location = new Point(_owner.Location.X, _owner.Location.Y + (_owner.Height - _control.Height) / 2);

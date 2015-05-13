@@ -149,8 +149,8 @@
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 0;
-            this.metroTabControl1.Size = new System.Drawing.Size(613, 302);
+            this.metroTabControl1.SelectedIndex = 4;
+            this.metroTabControl1.Size = new System.Drawing.Size(820, 388);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
             // 
@@ -177,7 +177,7 @@
             this.metroTabPage1.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage1.Name = "metroTabPage1";
             this.metroTabPage1.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage1.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage1.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage1.TabIndex = 0;
             this.metroTabPage1.Text = "Tiles && Buttons";
             this.metroTabPage1.VerticalScrollbar = true;
@@ -349,7 +349,7 @@
             this.metroTabPage2.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage2.Name = "metroTabPage2";
             this.metroTabPage2.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage2.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage2.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage2.TabIndex = 1;
             this.metroTabPage2.Text = "Options";
             this.metroTabPage2.VerticalScrollbarBarColor = true;
@@ -583,7 +583,7 @@
             this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage3.Name = "metroTabPage3";
             this.metroTabPage3.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage3.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage3.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage3.TabIndex = 2;
             this.metroTabPage3.Text = "Scroll && Progress";
             this.metroTabPage3.VerticalScrollbar = true;
@@ -732,7 +732,7 @@
             this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage4.Name = "metroTabPage4";
             this.metroTabPage4.Padding = new System.Windows.Forms.Padding(25);
-            this.metroTabPage4.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage4.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage4.TabIndex = 3;
             this.metroTabPage4.Text = "Labels && Text";
             this.metroTabPage4.VerticalScrollbarBarColor = true;
@@ -912,7 +912,7 @@
             this.metroTabPage6.HorizontalScrollbarSize = 10;
             this.metroTabPage6.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage6.Name = "metroTabPage6";
-            this.metroTabPage6.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage6.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage6.TabIndex = 5;
             this.metroTabPage6.Text = "MessageBox";
             this.metroTabPage6.VerticalScrollbarBarColor = true;
@@ -930,11 +930,11 @@
             // 
             // metroButton4
             // 
-            this.metroButton4.Location = new System.Drawing.Point(244, 133);
+            this.metroButton4.Location = new System.Drawing.Point(5, 216);
             this.metroButton4.Name = "metroButton4";
-            this.metroButton4.Size = new System.Drawing.Size(127, 37);
+            this.metroButton4.Size = new System.Drawing.Size(154, 42);
             this.metroButton4.TabIndex = 16;
-            this.metroButton4.Text = "Styled Button";
+            this.metroButton4.Text = "Input box";
             this.metroButton4.UseSelectable = true;
             this.metroButton4.UseStyleColors = true;
             this.metroButton4.Click += new System.EventHandler(this.metroButton4_Click_1);
@@ -1018,7 +1018,7 @@
             this.metroTabPage7.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage7.Name = "metroTabPage7";
             this.metroTabPage7.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.metroTabPage7.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage7.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage7.TabIndex = 6;
             this.metroTabPage7.Text = "Grid";
             this.metroTabPage7.VerticalScrollbarBarColor = true;
@@ -1068,7 +1068,7 @@
             this.metroGrid1.RowHeadersVisible = false;
             this.metroGrid1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.metroGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.metroGrid1.Size = new System.Drawing.Size(605, 255);
+            this.metroGrid1.Size = new System.Drawing.Size(812, 341);
             this.metroGrid1.TabIndex = 2;
             // 
             // metroTabPage5
@@ -1085,7 +1085,7 @@
             this.metroTabPage5.HorizontalScrollbarSize = 10;
             this.metroTabPage5.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage5.Name = "metroTabPage5";
-            this.metroTabPage5.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage5.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage5.TabIndex = 4;
             this.metroTabPage5.Text = "Legacy";
             this.metroTabPage5.VerticalScrollbarBarColor = true;
@@ -1171,7 +1171,7 @@
             this.metroTabPage8.HorizontalScrollbarSize = 10;
             this.metroTabPage8.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage8.Name = "metroTabPage8";
-            this.metroTabPage8.Size = new System.Drawing.Size(605, 260);
+            this.metroTabPage8.Size = new System.Drawing.Size(812, 346);
             this.metroTabPage8.TabIndex = 7;
             this.metroTabPage8.Text = "Close tab";
             this.metroTabPage8.VerticalScrollbarBarColor = true;
@@ -1244,7 +1244,7 @@
             this.BackImage = global::MetroFramework.Demo.Properties.Resources.GitHub_Mark;
             this.BackImagePadding = new System.Windows.Forms.Padding(210, 10, 0, 0);
             this.BackMaxSize = 50;
-            this.ClientSize = new System.Drawing.Size(653, 382);
+            this.ClientSize = new System.Drawing.Size(860, 468);
             this.Controls.Add(this.metroTabControl1);
             this.Name = "MainForm";
             this.StyleManager = this.metroStyleManager;
