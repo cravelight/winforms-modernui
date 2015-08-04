@@ -149,7 +149,7 @@ namespace MetroFramework.Controls
 
         public MetroMenuStrip(IContainer Container)
         {
-             if (Container != null)
+            if (Container != null)
             {
                 Container.Add(this);
             }
@@ -157,9 +157,12 @@ namespace MetroFramework.Controls
 
         private void settheme()
         {
+            this.RenderMode = ToolStripRenderMode.Professional;
+            this.Renderer = new MetroToolStripProfessionalRenderer(Theme, Style);
             this.BackColor = MetroPaint.BackColor.Form(Theme);
             this.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
-            this.Renderer = new MetroToolStripProfessionalRenderer(Theme, Style);     
+            //todo: figure out if this is how you are supposed to use the theme defined font
+            this.Font = MetroFonts.Button(MetroButtonSize.Medium, MetroButtonWeight.Light);
         }
 
 
