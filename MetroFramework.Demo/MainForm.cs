@@ -19,7 +19,6 @@ namespace MetroFramework.Demo
 
             metroGrid1.Font = new Font("Segoe UI", 11f, FontStyle.Regular, GraphicsUnit.Pixel);
             metroGrid1.AllowUserToAddRows = false;
-
         }
 
         private void metroTileSwitch_Click(object sender, EventArgs e)
