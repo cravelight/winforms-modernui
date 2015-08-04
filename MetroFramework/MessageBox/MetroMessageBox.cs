@@ -15,6 +15,8 @@ namespace MetroFramework
     /// </summary>
     public static class MetroMessageBox
     {
+        private const int defaultHeight = 211;
+
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
         /// </summary>
@@ -22,7 +24,7 @@ namespace MetroFramework
         /// <param name="message"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message,int height=211)
+        public static DialogResult Show(IWin32Window owner, String message, int height = defaultHeight)
         { return Show(owner, message, "Notification", height); }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace MetroFramework
         /// <param name="title"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, int height = 211)
+        public static DialogResult Show(IWin32Window owner, String message, String title, int height = defaultHeight)
         { return Show(owner, message, title, MessageBoxButtons.OK, height); }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace MetroFramework
         /// <param name="buttons"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, int height = 211)
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, int height = defaultHeight)
         { return Show(owner, message, title, buttons, MessageBoxIcon.None, height); }
 
         /// <summary>
@@ -58,8 +60,27 @@ namespace MetroFramework
         /// <param name="icon"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, int height = 211)
-        { return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, height); }
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, int height = defaultHeight)
+        {
+            string refstring= null;
+            return Show(owner, message, title, buttons, icon, MessageBoxDefaultButton.Button1, ref refstring, height); 
+        }
+
+        /// <summary>
+        /// Shows a metro-styles message notification into the specified owner window.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <param name="buttons"></param>
+        /// <param name="icon"></param>
+        /// <param name="height" optional=211></param>
+        /// <returns></returns>
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, int height = defaultHeight)
+        {
+            string refstring = null;
+            return Show(owner, message, title, buttons, icon, defaultbutton, ref refstring, height);
+        }
 
         /// <summary>
         /// Shows a metro-styles message notification into the specified owner window.
@@ -72,13 +93,13 @@ namespace MetroFramework
         /// <param name="defaultbutton"></param>
         /// <param name="height" optional=211></param>
         /// <returns></returns>
-        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, int height = 211)
+        public static DialogResult Show(IWin32Window owner, String message, String title, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultbutton, ref string inputValue, int height = defaultHeight)
         {
             DialogResult _result = DialogResult.None;
 
             if (owner != null)
             {
-                Form _owner = (Form)owner;
+                Form _owner = (owner as Form == null) ? ((UserControl)owner).ParentForm : (Form)owner;
                 
                 //int _minWidth = 500;
                 //int _minHeight = 350;
@@ -133,16 +154,18 @@ namespace MetroFramework
                 //    _control.Style = ((MetroForm)_owner).Style;
                 //}
 
+                _control.Properties.InputBox = (inputValue != null);
+
                 _control.Size = new Size(_owner.Size.Width, height);
                 _control.Location = new Point(_owner.Location.X, _owner.Location.Y + (_owner.Height - _control.Height) / 2);
                 _control.ArrangeApperance();
-                int _overlaySizes = Convert.ToInt32(Math.Floor(_control.Size.Height * 0.28));
+                //int _overlaySizes = Convert.ToInt32(Math.Floor(_control.Size.Height * 0.28));
                 //_control.OverlayPanelTop.Size = new Size(_control.Size.Width, _overlaySizes - 30);
                 //_control.OverlayPanelBottom.Size = new Size(_control.Size.Width, _overlaySizes);
 
                 _control.ShowDialog();
-                _control.BringToFront();
-                _control.SetDefaultButton();
+                //_control.BringToFront();
+                //_control.SetFocus();
 
                 Action<MetroMessageBoxControl> _delegate = new Action<MetroMessageBoxControl>(ModalState);
                 IAsyncResult _asyncresult = _delegate.BeginInvoke(_control, null, _delegate);
@@ -169,8 +192,9 @@ namespace MetroFramework
                 if (!_cancelled)
                 {
                     _result = _control.Result;
+                    inputValue = _control.InputBoxText;
                     //_owner.Controls.Remove(_control);
-                    _control.Dispose(); _control = null;
+                    _control.Dispose(); _control = null;            
                 }
                  
             }

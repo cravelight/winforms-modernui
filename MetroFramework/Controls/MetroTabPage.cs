@@ -168,6 +168,10 @@ namespace MetroFramework.Controls
             set { SetStyle(ControlStyles.Selectable, value); }
         }
 
+        [Browsable(false)]
+        [Category(MetroDefaults.PropertyCategory.Behaviour)]
+        [DefaultValue(false)]
+        public bool AllowClose { get; set; }
         #endregion
 
         #region Fields

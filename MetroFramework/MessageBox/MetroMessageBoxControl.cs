@@ -27,22 +27,8 @@ namespace MetroFramework
             metroButton1.Click += new EventHandler(button_Click);
             metroButton2.Click += new EventHandler(button_Click);
             metroButton3.Click += new EventHandler(button_Click);
+
         }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Color _defaultColor = Color.FromArgb(57, 179, 215);
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Color _errorColor = Color.FromArgb(210, 50, 45);
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Color _warningColor = Color.FromArgb(237, 156, 40);
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Color _success = Color.FromArgb(71, 164, 71);
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Color _question = Color.FromArgb(71, 164, 71);
 
         /// <summary>
         /// Gets the top body section of the control. 
@@ -64,12 +50,24 @@ namespace MetroFramework
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private DialogResult _result = DialogResult.None;
 
+
         /// <summary>
         /// Gets the dialog result that the user have chosen.
         /// </summary>
         public DialogResult Result
         {
             get { return _result; }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string _inputBoxText = "";
+
+        /// <summary>
+        /// Gets the dialog result that the user have chosen.
+        /// </summary>
+        public string InputBoxText
+        {
+            get { return _inputBoxText; }
         }
 
         /// <summary>
@@ -80,15 +78,15 @@ namespace MetroFramework
             titleLabel.Text = _properties.Title;
             messageLabel.Text = _properties.Message;
 
-            switch (_properties.Icon)
+            if (_properties.InputBox)
             {
-                case MessageBoxIcon.Exclamation:
-                    panelbody.BackColor = _warningColor;
-                    break;
-                case MessageBoxIcon.Error:
-                    panelbody.BackColor = _errorColor;
-                    break;
-                default: break;
+                metroTextBox1.Enabled = true;
+                metroTextBox1.Visible = true;
+            }
+            else
+            {
+                metroTextBox1.Enabled = false;
+                metroTextBox1.Visible = false;
             }
 
             switch (_properties.Buttons)
@@ -99,6 +97,8 @@ namespace MetroFramework
                     metroButton1.Text = "&OK";
                     metroButton1.Location = metroButton3.Location;
                     metroButton1.Tag = DialogResult.OK;
+                    this.AcceptButton = metroButton1;
+                    this.CancelButton = metroButton1;
 
                     EnableButton(metroButton2, false);
                     EnableButton(metroButton3, false);
@@ -109,12 +109,14 @@ namespace MetroFramework
                     metroButton1.Text = "&OK";
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.OK;
+                    this.AcceptButton = metroButton1;
 
                     EnableButton(metroButton2);
 
                     metroButton2.Text = "&Cancel";
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.Cancel;
+                    this.CancelButton = metroButton2;
 
                     EnableButton(metroButton3, false);
                     break;
@@ -124,12 +126,14 @@ namespace MetroFramework
                     metroButton1.Text = "&Retry";
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.Retry;
+                    this.AcceptButton = metroButton1;
 
                     EnableButton(metroButton2);
 
                     metroButton2.Text = "&Cancel";
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.Cancel;
+                    this.CancelButton = metroButton2;
 
                     EnableButton(metroButton3, false);
                     break;
@@ -139,12 +143,14 @@ namespace MetroFramework
                     metroButton1.Text = "&Yes";
                     metroButton1.Location = metroButton2.Location;
                     metroButton1.Tag = DialogResult.Yes;
+                    this.AcceptButton = metroButton1;
 
                     EnableButton(metroButton2);
 
                     metroButton2.Text = "&No";
                     metroButton2.Location = metroButton3.Location;
                     metroButton2.Tag = DialogResult.No;
+                    this.CancelButton = metroButton2;
 
                     EnableButton(metroButton3, false);
                     break;
@@ -163,6 +169,7 @@ namespace MetroFramework
 
                     metroButton3.Text = "&Cancel";
                     metroButton3.Tag = DialogResult.Cancel;
+                    this.CancelButton = metroButton2;
 
                     break;
                 case MessageBoxButtons.AbortRetryIgnore:
@@ -185,24 +192,33 @@ namespace MetroFramework
                 default : break;
             }
 
+
+
             switch (_properties.Icon)
             {
                 case  MessageBoxIcon.Error:
-                    panelbody.BackColor = _errorColor; break;
+                    panelbody.BackColor = MetroColors.ErrorColor;
+                    break;
                 case MessageBoxIcon.Warning:
-                    panelbody.BackColor = _warningColor; break;
+                    panelbody.BackColor = MetroColors.WarningColor;
+                    break;
                 case MessageBoxIcon.Information:
-                    panelbody.BackColor = _defaultColor;                    
-                     break;
+                    panelbody.BackColor = MetroColors.Blue;
+                    break;
                 case MessageBoxIcon.Question:
-                    panelbody.BackColor = _question; break;
+                    panelbody.BackColor = MetroColors.QuestionColor;
+                    break;
                 default:
-                    panelbody.BackColor = Color.DarkGray; break;
+                    panelbody.BackColor = Color.DarkGray; 
+                    break;
             }
+
         }
 
         private void EnableButton(MetroButton button)
-        { EnableButton(button, true); }
+        { 
+            EnableButton(button, true); 
+        }
 
         private void EnableButton(MetroButton button, bool enabled)
         {
@@ -212,39 +228,50 @@ namespace MetroFramework
         /// <summary>
         /// Sets the default focused button.
         /// </summary>
-        public void SetDefaultButton()
+        public void SetFocus()
         {
-            switch (_properties.DefaultButton)
+            if (_properties.InputBox)
             {
-                case MessageBoxDefaultButton.Button1:
-                    if (metroButton1 != null)
-                    {
-                        if (metroButton1.Enabled) metroButton1.Focus();
-                    }
-                    break;
-                case MessageBoxDefaultButton.Button2:
-                    if (metroButton2 != null)
-                    {
-                        if (metroButton2.Enabled) metroButton2.Focus();
-                    }
-                    break;
-                case MessageBoxDefaultButton.Button3:
-                    if (metroButton3 != null)
-                    {
-                        if (metroButton3.Enabled) metroButton3.Focus();
-                    }
-                    break;  
-                default: break;
+                if (metroTextBox1 != null)
+                {
+                    metroTextBox1.Focus();
+                    metroTextBox1.Select();
+                }
+            }
+            else
+            {
+                switch (_properties.DefaultButton)
+                {
+                    case MessageBoxDefaultButton.Button1:
+                        if (metroButton1 != null)
+                        {
+                            if (metroButton1.Enabled) metroButton1.Focus();
+                        }
+                        break;
+                    case MessageBoxDefaultButton.Button2:
+                        if (metroButton2 != null)
+                        {
+                            if (metroButton2.Enabled) metroButton2.Focus();
+                        }
+                        break;
+                    case MessageBoxDefaultButton.Button3:
+                        if (metroButton3 != null)
+                        {
+                            if (metroButton3.Enabled) metroButton3.Focus();
+                        }
+                        break;
+                    default: break;
+                }
             }
         }
 
-        private void button_MouseClick(object sender, MouseEventArgs e)
-        {
-            //MetroButton button = (MetroButton)sender;
-            //button.BackColor = MetroPaint.BackColor.Button.Press(MetroFramework.MetroThemeStyle.Light);
-            //button.FlatAppearance.BorderColor = MetroPaint.BorderColor.Button.Press(MetroFramework.MetroThemeStyle.Light);
-            //button.ForeColor = MetroPaint.ForeColor.Button.Press(MetroFramework.MetroThemeStyle.Light);
-        }
+        //private void button_MouseClick(object sender, MouseEventArgs e)
+        //{
+        //    //MetroButton button = (MetroButton)sender;
+        //    //button.BackColor = MetroPaint.BackColor.Button.Press(MetroFramework.MetroThemeStyle.Light);
+        //    //button.FlatAppearance.BorderColor = MetroPaint.BorderColor.Button.Press(MetroFramework.MetroThemeStyle.Light);
+        //    //button.ForeColor = MetroPaint.ForeColor.Button.Press(MetroFramework.MetroThemeStyle.Light);
+        //}
 
         private void button_MouseEnter(object sender, EventArgs e)
         { StylizeButton((MetroButton)sender, true); }
@@ -259,8 +286,8 @@ namespace MetroFramework
         {
             button.Cursor = Cursors.Hand;
 
-            button.MouseClick -= button_MouseClick;
-            button.MouseClick += button_MouseClick;
+            //button.MouseClick -= button_MouseClick;
+            //button.MouseClick += button_MouseClick;
             
             button.MouseEnter -= button_MouseEnter;
             button.MouseEnter += button_MouseEnter;
@@ -288,7 +315,13 @@ namespace MetroFramework
             MetroButton button = (MetroButton)sender;
             if (!button.Enabled) return;
             _result = (DialogResult)button.Tag;
-            Hide(); 
+            _inputBoxText = metroTextBox1.Text;
+            Hide();
+        }
+
+        private void tlpBody_Shown(object sender, EventArgs e)
+        {
+            SetFocus();
         }
 
     }

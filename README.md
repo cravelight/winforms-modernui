@@ -1,13 +1,13 @@
+
+Version 1.4
+* Fixed several bugs
+* added option to display a textbox in the messagebox overlay and get the inputvalue back
+
+
 MetroFramework - WinForms on steroids.
 --------------------------------------
 
 Brings the new Modern UI alias Metro UI of Windows 8 to .NET Windows Forms applications. 
-
-Install via NuGet 
-------------------
-    Install-Package MetroModernUI
-
-Link: https://www.nuget.org/packages/MetroModernUI/
 
 Supported platforms
 -------------------

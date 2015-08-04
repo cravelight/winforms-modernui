@@ -58,5 +58,11 @@ namespace MetroFramework
         public string Title
         { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets the message box inputBox
+        /// </summary>
+        public bool InputBox
+        { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-
 using MetroFramework.Forms;
 using System.Data;
 
@@ -25,9 +24,7 @@ namespace MetroFramework.Demo
 
         private void metroTileSwitch_Click(object sender, EventArgs e)
         {
-            var m = new Random();
-            int next = m.Next(0, 13);
-            metroStyleManager.Style = (MetroColorStyle)next;
+            metroStyleManager.Style = metroStyleManager.Style.Next();
         }
 
         private void metroTile1_Click(object sender, EventArgs e)
@@ -57,12 +54,12 @@ namespace MetroFramework.Demo
 
         private void metroButton10_Click(object sender, EventArgs e)
         {
-            MetroMessageBox.Show(this, "This is a sample MetroMessagebox `OK` and `Cancel` button", "MetroMessagebox", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            MetroMessageBox.Show(this, MetroMessageBox.Show(this, "This is a sample MetroMessagebox `OK` and `Cancel` button", "MetroMessagebox", MessageBoxButtons.OKCancel, MessageBoxIcon.Information).ToString() );
         }
 
         private void metroButton7_Click(object sender, EventArgs e)
         {
-            MetroMessageBox.Show(this, "This is a sample MetroMessagebox `Yes` and `No` button", "MetroMessagebox", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            MetroMessageBox.Show(this, MetroMessageBox.Show(this, "This is a sample MetroMessagebox `Yes` and `No` button", "MetroMessagebox", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2).ToString() );
         }
 
         private void metroButton8_Click(object sender, EventArgs e)
@@ -89,5 +86,31 @@ namespace MetroFramework.Demo
         {
             metroTextBox2.Focus();
         }
+
+        private void metroButton4_Click_1(object sender, EventArgs e)
+        {
+            string returnValue = "";
+            if (MetroMessageBox.Show(this, "This is a sample Input Box with `OK` and `Cancel` button", "MetroMessagebox", MessageBoxButtons.OKCancel, MessageBoxIcon.Information,  MessageBoxDefaultButton.Button1, ref returnValue) == System.Windows.Forms.DialogResult.OK)
+            {
+                metroLabel21.Text = "You entered: " + returnValue;
+            }
+        }
     }
+
+    public static class Extensions
+    {
+        public static T Next<T>(this T src) where T : struct
+        {
+            if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argumnent {0} is not an Enum", typeof(T).FullName));
+
+            T[] Arr = (T[])Enum.GetValues(src.GetType());
+            int j = Array.IndexOf<T>(Arr, src) + 1;
+            return (Arr.Length == j) ? Arr[0] : Arr[j];
+        }
+    }
+}
+
+namespace System.Runtime.CompilerServices
+{
+    public class ExtensionAttribute : Attribute { }
 }

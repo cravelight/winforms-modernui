@@ -576,6 +576,7 @@ namespace MetroFramework.Controls
             baseTextBox.BorderStyle = BorderStyle.None;
 
             Size = GetPreferredSize(Size.Empty);
+            baseTextBox.Size = Size;
 
             baseTextBox.ResumeLayout();
             ResumeLayout();

@@ -32,13 +32,16 @@
             this.tlpBody = new System.Windows.Forms.TableLayoutPanel();
             this.messageLabel = new System.Windows.Forms.Label();
             this.titleLabel = new System.Windows.Forms.Label();
+            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.pnlMiddle = new System.Windows.Forms.Panel();
+            this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.metroButton3 = new MetroFramework.Controls.MetroButton();
-            this.metroButton2 = new MetroFramework.Controls.MetroButton();
-            this.pnlBottom = new System.Windows.Forms.Panel();
+            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.panelbody.SuspendLayout();
             this.tlpBody.SuspendLayout();
             this.pnlBottom.SuspendLayout();
+            this.pnlMiddle.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelbody
@@ -60,17 +63,20 @@
             this.tlpBody.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tlpBody.Controls.Add(this.messageLabel, 1, 2);
             this.tlpBody.Controls.Add(this.titleLabel, 1, 1);
-            this.tlpBody.Controls.Add(this.pnlBottom, 1, 3);
+            this.tlpBody.Controls.Add(this.pnlBottom, 1, 4);
+            this.tlpBody.Controls.Add(this.pnlMiddle, 1, 3);
             this.tlpBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpBody.Location = new System.Drawing.Point(0, 0);
             this.tlpBody.Name = "tlpBody";
-            this.tlpBody.RowCount = 4;
+            this.tlpBody.RowCount = 5;
             this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5F));
             this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 51F));
             this.tlpBody.Size = new System.Drawing.Size(804, 211);
             this.tlpBody.TabIndex = 6;
+            this.Shown += new System.EventHandler(this.tlpBody_Shown);
             // 
             // messageLabel
             // 
@@ -82,7 +88,7 @@
             this.messageLabel.Location = new System.Drawing.Point(83, 30);
             this.messageLabel.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.messageLabel.Name = "messageLabel";
-            this.messageLabel.Size = new System.Drawing.Size(640, 141);
+            this.messageLabel.Size = new System.Drawing.Size(640, 75);
             this.messageLabel.TabIndex = 0;
             this.messageLabel.Text = "message here";
             // 
@@ -99,12 +105,47 @@
             this.titleLabel.TabIndex = 1;
             this.titleLabel.Text = "message title";
             // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.Color.Transparent;
+            this.pnlBottom.Controls.Add(this.metroButton2);
+            this.pnlBottom.Controls.Add(this.metroButton1);
+            this.pnlBottom.Controls.Add(this.metroButton3);
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBottom.Location = new System.Drawing.Point(80, 160);
+            this.pnlBottom.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(643, 51);
+            this.pnlBottom.TabIndex = 2;
+            // 
+            // pnlMiddle
+            // 
+            this.pnlMiddle.BackColor = System.Drawing.Color.Transparent;
+            this.pnlMiddle.Controls.Add(this.metroTextBox1);
+            this.pnlMiddle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMiddle.Location = new System.Drawing.Point(80, 105);
+            this.pnlMiddle.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlMiddle.Name = "pnlMiddle";
+            this.pnlMiddle.Size = new System.Drawing.Size(643, 55);
+            this.pnlMiddle.TabIndex = 2;
+            // 
+            // metroButton2
+            // 
+            this.metroButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroButton2.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.metroButton2.Location = new System.Drawing.Point(455, 12);
+            this.metroButton2.Name = "metroButton2";
+            this.metroButton2.Size = new System.Drawing.Size(90, 26);
+            this.metroButton2.TabIndex = 4;
+            this.metroButton2.Text = "button 2";
+            this.metroButton2.UseSelectable = true;
+            // 
             // metroButton1
             // 
             this.metroButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.metroButton1.BackColor = System.Drawing.Color.ForestGreen;
             this.metroButton1.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.metroButton1.Location = new System.Drawing.Point(357, 1);
+            this.metroButton1.Location = new System.Drawing.Point(357, 12);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(90, 26);
             this.metroButton1.TabIndex = 3;
@@ -115,36 +156,27 @@
             // 
             this.metroButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.metroButton3.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.metroButton3.Location = new System.Drawing.Point(553, 1);
+            this.metroButton3.Location = new System.Drawing.Point(553, 12);
             this.metroButton3.Name = "metroButton3";
             this.metroButton3.Size = new System.Drawing.Size(90, 26);
             this.metroButton3.TabIndex = 5;
             this.metroButton3.Text = "button 3";
             this.metroButton3.UseSelectable = true;
             // 
-            // metroButton2
+            // metroTextBox1
             // 
-            this.metroButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroButton2.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.metroButton2.Location = new System.Drawing.Point(455, 1);
-            this.metroButton2.Name = "metroButton2";
-            this.metroButton2.Size = new System.Drawing.Size(90, 26);
-            this.metroButton2.TabIndex = 4;
-            this.metroButton2.Text = "button 2";
-            this.metroButton2.UseSelectable = true;
-            // 
-            // pnlBottom
-            // 
-            this.pnlBottom.BackColor = System.Drawing.Color.Transparent;
-            this.pnlBottom.Controls.Add(this.metroButton2);
-            this.pnlBottom.Controls.Add(this.metroButton1);
-            this.pnlBottom.Controls.Add(this.metroButton3);
-            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBottom.Location = new System.Drawing.Point(80, 171);
-            this.pnlBottom.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(643, 40);
-            this.pnlBottom.TabIndex = 2;
+            this.metroTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroTextBox1.Lines = new string[0];
+            this.metroTextBox1.Location = new System.Drawing.Point(143, 14);
+            this.metroTextBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.metroTextBox1.MaxLength = 32767;
+            this.metroTextBox1.Name = "metroTextBox1";
+            this.metroTextBox1.PasswordChar = '\0';
+            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.metroTextBox1.SelectedText = "";
+            this.metroTextBox1.Size = new System.Drawing.Size(500, 20);
+            this.metroTextBox1.TabIndex = 0;
+            this.metroTextBox1.UseSelectable = true;
             // 
             // MetroMessageBoxControl
             // 
@@ -162,6 +194,7 @@
             this.tlpBody.ResumeLayout(false);
             this.tlpBody.PerformLayout();
             this.pnlBottom.ResumeLayout(false);
+            this.pnlMiddle.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -176,5 +209,7 @@
         private Controls.MetroButton metroButton3;
         private System.Windows.Forms.TableLayoutPanel tlpBody;
         private System.Windows.Forms.Panel pnlBottom;
+        private System.Windows.Forms.Panel pnlMiddle;
+        private Controls.MetroTextBox metroTextBox1;
     }
 }

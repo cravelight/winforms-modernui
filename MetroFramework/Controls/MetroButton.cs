@@ -244,6 +244,10 @@ namespace MetroFramework.Controls
                 {
                     backColor = MetroPaint.BackColor.Button.Disabled(Theme);
                 }
+                else if (Highlight && Enabled)
+                {
+                    backColor = MetroPaint.GetStyleColor(Style);
+                }
                 else
                 {
                     if (!useCustomBackColor)
@@ -312,6 +316,10 @@ namespace MetroFramework.Controls
                 {
                     foreColor = ForeColor;
                 }
+                else if (Highlight)
+                {
+                    foreColor = MetroPaint.BackColor.Form(Theme);
+                }
                 else if (useStyleColors)
                 {
                     foreColor = MetroPaint.GetStyleColor(Style);
@@ -321,23 +329,23 @@ namespace MetroFramework.Controls
                     foreColor = MetroPaint.ForeColor.Button.Normal(Theme);
                 }
             }
-            
-            using (Pen p = new Pen(borderColor))
-            {
-                Rectangle borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
-                e.Graphics.DrawRectangle(p, borderRect);
-            }
 
-            if (Highlight && !isHovered && !isPressed && Enabled)
-            {
-                using (Pen p = MetroPaint.GetStylePen(Style))
-                {
-                    Rectangle borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
-                    e.Graphics.DrawRectangle(p, borderRect);
-                    borderRect = new Rectangle(1, 1, Width - 3, Height - 3);
-                    e.Graphics.DrawRectangle(p, borderRect);
-                }
-            }
+            //using (Pen p = new Pen(borderColor))
+            //{
+            //    Rectangle borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            //    e.Graphics.DrawRectangle(p, borderRect);
+            //}
+
+            //if (Highlight && !isHovered && !isPressed && Enabled)
+            //{
+            //    using (Pen p = MetroPaint.GetStylePen(Style))
+            //    {
+            //        Rectangle borderRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            //        e.Graphics.DrawRectangle(p, borderRect);
+            //        borderRect = new Rectangle(1, 1, Width - 3, Height - 3);
+            //        e.Graphics.DrawRectangle(p, borderRect);
+            //    }
+            //}
 
             TextRenderer.DrawText(e.Graphics, Text, MetroFonts.Button(metroButtonSize, metroButtonWeight), ClientRectangle, foreColor, MetroPaint.GetTextFormatFlags(TextAlign));
 

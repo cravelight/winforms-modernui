@@ -138,5 +138,38 @@ namespace MetroFramework
                 return Color.FromArgb(255, 196, 37);
             }
         }
+
+        public static Color ErrorColor
+        {
+            get
+            {
+                return Color.FromArgb(210, 50, 45);
+            }
+        }
+
+        public static Color WarningColor
+        {
+            get
+            {
+                return Color.FromArgb(237, 156, 40);
+            }
+        }
+
+        public static Color SuccessColor
+        {
+            get
+            {
+                return Color.FromArgb(71, 164, 71);
+            }
+        }
+
+        public static Color QuestionColor
+        {
+            get
+            {
+                return Color.FromArgb(71, 164, 71);
+            }
+        }
+
     }
 }
