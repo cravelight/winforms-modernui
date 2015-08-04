@@ -108,9 +108,13 @@
     <Compile Include="Controls\MetroLink.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroMenuStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MetroPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroProfessionalColorTable.cs" />
     <Compile Include="Controls\MetroProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -138,6 +142,7 @@
     <Compile Include="Controls\MetroToggle.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroToolStripProfessionalRenderer.cs" />
     <Compile Include="Controls\MetroTrackBar.cs">
       <SubType>Component</SubType>
     </Compile>

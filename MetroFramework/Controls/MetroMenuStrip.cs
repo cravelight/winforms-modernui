@@ -1,16 +1,15 @@
-﻿using MetroFramework;
-using MetroFramework.Components;
-using MetroFramework.Drawing;
-using MetroFramework.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Forms;
+using MetroFramework.Components;
+using MetroFramework.Drawing;
+using MetroFramework.Interfaces;
 
 namespace MetroFramework.Controls
 {
-    public class MetroContextMenu : ContextMenuStrip, IMetroControl
+    public class MetroMenuStrip : MenuStrip, IMetroControl
     {
         #region Interface
 
@@ -102,7 +101,8 @@ namespace MetroFramework.Controls
         public MetroStyleManager StyleManager
         {
             get { return metroStyleManager; }
-            set { 
+            set
+            {
                 metroStyleManager = value;
                 settheme();
             }
@@ -146,8 +146,9 @@ namespace MetroFramework.Controls
 
         #endregion
 
-        
-        public MetroContextMenu(IContainer Container) {
+
+        public MetroMenuStrip(IContainer Container)
+        {
              if (Container != null)
             {
                 Container.Add(this);
