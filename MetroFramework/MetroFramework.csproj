@@ -108,6 +108,9 @@
     <Compile Include="Controls\MetroLink.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\MetroMenuStrip.cs">
       <SubType>Component</SubType>
     </Compile>
