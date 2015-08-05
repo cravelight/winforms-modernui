@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using MetroFramework.Components;
@@ -127,6 +128,7 @@ namespace MetroFramework.Controls
         }
 
         private bool useStyleColors = false;
+
         [DefaultValue(false)]
         [Category("Metro Appearance")]
         public bool UseStyleColors
@@ -153,18 +155,19 @@ namespace MetroFramework.Controls
             {
                 Container.Add(this);
             }
+
         }
 
         private void settheme()
         {
-            this.RenderMode = ToolStripRenderMode.Professional;
-            this.Renderer = new MetroToolStripProfessionalRenderer(Theme, Style);
             this.BackColor = MetroPaint.BackColor.Form(Theme);
             this.ForeColor = MetroPaint.ForeColor.Button.Normal(Theme);
+            this.RenderMode = ToolStripRenderMode.Professional;
+            this.Renderer = new MetroToolStripProfessionalRenderer(Theme, Style);
             //todo: figure out if this is how you are supposed to use the theme defined font
             this.Font = MetroFonts.Button(MetroButtonSize.Medium, MetroButtonWeight.Light);
         }
 
-
     }
+
 }

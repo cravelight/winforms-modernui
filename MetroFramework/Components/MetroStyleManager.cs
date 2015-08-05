@@ -201,6 +201,11 @@ namespace MetroFramework.Components
                 {
                     ApplyTheme((MetroContextMenu)obj);
                 }
+
+                if (obj.GetType() == typeof(MetroMenuStrip))
+                {
+                    ApplyTheme((MetroMenuStrip)obj);
+                }
             }
         }
 
